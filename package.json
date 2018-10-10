@@ -1,0 +1,23 @@
+{
+  "name": "try-passwords",
+  "version": "1.0.0",
+  "description": "will try provided last resort passwords",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "last",
+    "resort",
+    "passwords",
+    "telnet"
+  ],
+  "author": "Tomas Kanocz",
+  "license": "MIT",
+  "dependencies": {
+    "expect-telnet": "^1.0.0",
+    "fluture": "^8.0.2",
+    "fluture-sanctuary-types": "^2.2.0",
+    "sanctuary": "^0.15.0"
+  }
+}
