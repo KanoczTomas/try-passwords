@@ -8,9 +8,9 @@ const S = create({checkTypes: true, env: env.concat(flutureEnv)});
 const et = require('expect-telnet');
 const fs = require('fs');
 
-const read = Future.encaseN2(fs.readFile);
+//readTextFile :: String -> Future Error [String]
 const readTextFile = filename =>
-  read(filename, 'utf-8')
+  Future.encaseN2(fs.readFile)(filename, 'utf-8')
   .map(S.lines)
 
 //tryPassword :: String -> String -> Future String StrMap
@@ -20,7 +20,7 @@ const tryPassword = ip => pass => Future(function computation(reject, resolve) {
     { expect: /#|>/, send: 'exit\r', out: () => resolve({ip, password: pass})}
   ], err => {
     if(err !== undefined){
-        reject(err.message);
+        reject(`${ip} - ${err.message}`);
     }
   });
 });
@@ -51,7 +51,9 @@ Future.both(
   readTextFile('./passwords')
 )
 .chain(([ips, passwords]) => {
+    //listOfDevicePasswordFutures :: [Future]
     const listOfDevicePasswordFutures = tryPasswordsOnIps (tryPasswords) (ips) (passwords);
+    //stabalizedListOfDevicePasswordFutures :: [Future]
     const stabalizedListOfDevicePasswordFutures = S.map (Future.fold(S.Left, S.Right)) (listOfDevicePasswordFutures);
     return Future.parallel(Infinity, stabalizedListOfDevicePasswordFutures)
   })
@@ -59,7 +61,7 @@ Future.both(
   console.error,
   res => {
     const found = S.pipe([
-      S.filter(S.isRight),
+      S.filter(S.isRight), //[Either] -> [Either.Right]
       S.map(S.fromEither({})),
       S.map(obj => `${S.prop('ip') (obj)},${S.prop('password') (obj)}\n`),
       S.reduce(stringReducer) ('')

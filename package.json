@@ -1,6 +1,6 @@
 {
   "name": "try-passwords",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "will try provided last resort passwords",
   "main": "index.js",
   "scripts": {
