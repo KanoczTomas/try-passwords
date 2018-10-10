@@ -14,6 +14,14 @@
   ],
   "author": "Tomas Kanocz",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KanoczTomas/try-passwords.git"
+  },
+  "bugs": {
+    "url": "https://github.com/KanoczTomas/try-passwords/issues"
+  },
+  "homepage": "https://github.com/KanoczTomas/try-passwords#readme",
   "dependencies": {
     "expect-telnet": "^1.0.0",
     "fluture": "^8.0.2",
