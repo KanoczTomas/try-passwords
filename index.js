@@ -20,7 +20,7 @@ const tryPassword = ip => pass => Future(function computation(reject, resolve) {
     { expect: /#|>/, send: 'exit\r', out: () => resolve({ip, password: pass})}
   ], err => {
     if(err !== undefined){
-        reject(`${ip} - ${err.message}`);
+        reject(err.message});
     }
   });
 });
@@ -33,7 +33,7 @@ const tryPasswords = passwords => ip =>
       .chainRej(res =>
         S.equals ("Expect sequence timeout: /#|>/") (res) === true
           ? tryPasswords(passwords.slice(1)) (ip)
-          : Future.reject(res)
+          : Future.reject(`${ip} - ${res}`)
       )
 
 // tryPasswordsOnIps :: ([String] -> String -> Future String StrMap) -> [String] -> [String] -> [Future]
