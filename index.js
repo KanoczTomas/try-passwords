@@ -20,7 +20,7 @@ const tryPassword = ip => pass => Future(function computation(reject, resolve) {
     { expect: /#|>/, send: 'exit\r', out: () => resolve({ip, password: pass})}
   ], err => {
     if(err !== undefined){
-        reject(err.message});
+        reject(err.message);
     }
   });
 });
